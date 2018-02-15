@@ -1,0 +1,30 @@
+---
+title: "mkE"
+author: "강명세"
+date: '2018 2 15 '
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document: default
+mainfont: NanumGothic
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 연구계획
+이 연구의 목표는 정치적 불평등이 경제적 불평등과 악순환 관계에 있는지에 대해 이해하려는 것이다. 피케티(Thomas Piketty)가 제기한 의문에 대한세계적 열풍은 경제적 불평등은 위험수위를 이미 넘었음을 반증한다. 2008년 미국발 대침체 이후의 경제적 양극화가 전후 가장 심각한 단계로 진입했다. 이로써 민주주의가 위협받는 수준에 이르렀다는 데 동의한다. 민주주의에 대한 위협은 트럼프의 당선은 가장 주목할만한 예이다. 정치경제 문헌은 경제적 불평등이 정치적 불평등으로 이어지며 후자는 다시 민주주의를 위협한다고 진단하면서 선거참여가 중대한 요인임을 강조한다. 소득별 투표가 존재하는지 한다면, 얼마마한 격차가 존재하는지를 밝히고자 한다. 양극화의 위협론은 민주주의와 경제적 양극화의 관계가 경험적으로 밝혀지지 않는 한 여전히 가설을 벗어나지 못한다. 
+
+```{r echo=FALSE, split=TRUE, comment=NA}
+load("~/Dropbox/book/dz.RData") # ~/Dropbox/now/allr file allr perfect
+library(MASS)
+library(effects)
+dz$교육기간<-as.factor(dz$교육기간)
+s.mod<-glm(투표~소득재분배+소득격차+소득과세+기본소득+빈부갈등+성+교육기간,data = dz,family = binomial)
+s.mod<-glm(투표~소득재분배+소득격차+소득과세+기본소득+빈부갈등+성,data = dz,family = binomial)
+ss.effects <- allEffects(s.mod)
+par(family="AppleGothic")
+plot(ss.effects, ylab="투표", rug=FALSE)
+```
+
